@@ -43,5 +43,6 @@ public class Application {
                 System.out.println(pet.getName());
             }
         }
+        System.out.println("Contain car bean： "+context.getBean("car"));
     }
 }

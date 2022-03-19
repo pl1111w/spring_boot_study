@@ -1,5 +1,6 @@
 package pl1111w;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,6 +17,7 @@ import pl1111w.config.MyConditionConfig;
  * @date 2022/3/14 10:14
  */
 @SpringBootApplication
+@Slf4j
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 public class Application {
 
@@ -27,6 +29,7 @@ public class Application {
         }
         System.out.println("get define configuration");
         User user001 = context.getBean("user001", User.class);
+        log.info("user: {}", user001);
         User user0011 = context.getBean("user001", User.class);
         System.out.println(user001 == user0011);
 
@@ -36,13 +39,13 @@ public class Application {
         }
 
         boolean b = context.containsBean(String.valueOf(MyConditionConfig.class));
-        if(b){
+        if (b) {
             MyConditionConfig bean = context.getBean(MyConditionConfig.class);
             Pet pet = bean.petInfo();
-            if (pet!= null){
+            if (pet != null) {
                 System.out.println(pet.getName());
             }
         }
-        System.out.println("Contain car bean： "+context.getBean("car"));
+        System.out.println("Contain car bean： " + context.getBean("car"));
     }
 }

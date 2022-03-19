@@ -1,11 +1,14 @@
 package pl1111w.bean;
 
+import lombok.Data;
+
 /**
  * @title: pl1111w
  * @description:
  * @author: Kris
  * @date 2022/3/15 10:42
  */
+@Data
 public class User {
 
     private String name;
@@ -14,36 +17,4 @@ public class User {
 
     private Pet pet;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public Pet getPet() {
-        return pet;
-    }
-
-    public void setPet(Pet pet) {
-        this.pet = pet;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                ", pet=" + pet +
-                '}';
-    }
 }

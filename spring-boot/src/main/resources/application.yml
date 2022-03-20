@@ -1,0 +1,21 @@
+person:
+  name: kris
+  age: 13
+  hobbies: [ basketball,swimmming ]
+  cars:
+    - speed: 280
+      name: byd
+    - speed: 290
+      name: bwm
+  secretaries:
+    hyn: 8
+    yqh: 10
+    zsn: 12
+    ssc: 13
+    lxn: 13
+  animals:
+     cat:
+       color: white
+     dog:
+       color: yellow
+

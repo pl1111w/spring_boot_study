@@ -31,6 +31,7 @@ public class MyInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable ModelAndView modelAndView) throws Exception {
+//        int a=1/0;  afterCompletion() method still executes
         log.info("postHandle: {}", request.getSession().getAttribute("user"));
     }
 

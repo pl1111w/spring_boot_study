@@ -1,3 +1,13 @@
+spring:
+#  mvc:
+#    static-path-pattern: /pl/**    #static resources prefix of pl
+
+  resources:
+    static-locations: classpath:/pl/
+
+
+
+
 person:
   name: kris
   age: 13

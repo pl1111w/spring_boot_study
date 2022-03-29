@@ -34,6 +34,7 @@ public class ControllerTest {
 
     @GetMapping("/person")
     public String person() {
+//        int a=1/0;  afterCompletion() method still executes
         log.info(yamlConfig.toString());
         return yamlConfig.toString();
     }

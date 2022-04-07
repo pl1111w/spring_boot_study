@@ -4,7 +4,11 @@ spring:
 
   resources:
     static-locations: classpath:/pl/
-
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 30MB       #alone
+      max-request-size: 30MB    #totol
 
 
 

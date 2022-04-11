@@ -24,7 +24,7 @@ public class ControllerTest {
 
     @GetMapping("/test")
     public String test() {
-//        int a = 1 / 0;
+        int a = 1 / 0;
         return "Hello Spring Boot2";
     }
 

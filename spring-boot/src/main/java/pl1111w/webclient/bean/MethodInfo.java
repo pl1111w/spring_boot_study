@@ -39,7 +39,7 @@ public class MethodInfo {
     /**
      * 请求body
      */
-    private Mono<?> body;
+    private Mono body;
 
     /**
      * 请求body的类型

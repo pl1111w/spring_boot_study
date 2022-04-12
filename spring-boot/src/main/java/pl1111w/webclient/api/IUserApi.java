@@ -16,12 +16,12 @@ public interface IUserApi {
     @GetMapping("/")
     Flux<User> getAllUser();
 
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     Mono<User> getUserById(@PathVariable("id") String id);
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     Mono<Void> deleteUserById(@PathVariable("id") String id);
 
-    @PostMapping("/")
+    @PostMapping("/create")
     Mono<User> createUser(@RequestBody Mono<User> user);
 }

@@ -89,7 +89,7 @@ public class JDKProxyCreator implements ProxyCreator {
     }
 
     /**
-     * 得到反省类型的实际类型
+     * 得到泛型类型的实际类型
      *
      * @param genericReturnType
      * @return
@@ -150,7 +150,7 @@ public class JDKProxyCreator implements ProxyCreator {
             }
             // POST
             else if (annotation instanceof PostMapping) {
-                PostMapping a = (PostMapping) annotation;
+                PostMapping a = (PostMapping)annotation;
                 methodInfo.setUrl(a.value()[0]);
                 methodInfo.setMethod(HttpMethod.POST);
             }

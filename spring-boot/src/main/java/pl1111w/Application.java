@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.ConfigurableApplicationContext;
 import pl1111w.bean.Pet;
 import pl1111w.bean.User;
@@ -19,6 +20,7 @@ import pl1111w.config.MyConditionConfig;
 @SpringBootApplication
 @Slf4j
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
+@ServletComponentScan(value = "pl1111w.webservlet")
 public class Application {
 
     public static void main(String[] args) {

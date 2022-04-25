@@ -1,6 +1,7 @@
 package pl1111w;
 
 import lombok.extern.slf4j.Slf4j;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,6 +22,7 @@ import pl1111w.config.MyConditionConfig;
 @Slf4j
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 @ServletComponentScan(value = "pl1111w.webservlet")
+//@MapperScan("pl1111w.database.mybatis.mapper")
 public class Application {
 
     public static void main(String[] args) {

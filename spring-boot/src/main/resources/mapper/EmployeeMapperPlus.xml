@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pl1111w.database.mybatis.mapper.EmployeeMapperPlus">
+    <resultMap id="employeeInfo" type="pl1111w.database.mybatis.entity.Employee">
+        <id column="id" property="id"></id>
+        <result column="last_name" property="lastName"></result>
+        <result column="email" property="email"></result>
+        <result column="gender" property="gender"></result>
+        <association property="department" javaType="pl1111w.database.mybatis.entity.Department">
+            <result column="id" property="deptId"></result>
+            <result column="dept_name" property="deptName"></result>
+        </association>
+    </resultMap>
+    <!--    <resultMap id="employeeInfo" type="pl1111w.database.mybatis.entity.Employee">-->
+    <!--        <id column="id" property="id"></id>-->
+    <!--        <result column="last_name" property="lastName"></result>-->
+    <!--        <result column="email" property="email"></result>-->
+    <!--        <result column="gender" property="gender"></result>-->
+    <!--        <result column="id" property="department.deptId"></result>-->
+    <!--        <result column="dept_name" property="department.deptName"></result>-->
+    <!--    </resultMap>-->
+    <sql id="baseInfo">
+       select email,last_name,gender from tbl_employee
+    </sql>
+
+    <select id="selectEmp" resultMap="employeeInfo">
+        <include refid="baseInfo"></include>
+        where id = #{id}
+    </select>
+
+    <select id="selectEmpLikeName" resultMap="employeeInfo">
+        select * from tbl_employee where last_name like #{lastName}
+    </select>
+    <select id="selectMapName" resultType="pl1111w.database.mybatis.entity.Employee">
+        select * from tbl_employee where last_name like #{lastName}
+    </select>
+
+    <select id="selectWithWhere" resultType="pl1111w.database.mybatis.entity.Employee">
+        select * from tbl_employee
+        <where>
+            <if test="id!=null">
+                id = #{id}
+            </if>
+            <if test="email!=null">
+                and email = #{email}
+            </if>
+            <if test="lastName!=null">
+                and last_name = #{lastName}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectWithTrim" resultType="pl1111w.database.mybatis.entity.Employee">
+        select * from tbl_employee
+        <trim prefix="WHERE" prefixOverrides="AND" suffixOverrides="AND">
+            <if test="id!=null">
+                id = #{id} and
+            </if>
+            <if test="email!=null">
+                email = #{email} and
+            </if>
+            <if test="lastName!=null">
+                last_name = #{lastName}
+            </if>
+        </trim>
+    </select>
+
+    <select id="selectWithChoose" resultType="pl1111w.database.mybatis.entity.Employee">
+        select * from tbl_employee where
+        <choose>
+            <when test="id &gt;=1">
+                id = #{id}
+            </when>
+            <when test="email!=null">
+                email = #{email}
+            </when>
+            <otherwise>
+                last_name = #{lastName}
+            </otherwise>
+        </choose>
+    </select>
+    <update id="updateWithTrim">
+        update tbl_employee
+        <trim suffixOverrides=",">
+            <set>
+                <if test="lastName!=null">
+                    last_name = #{lastName},
+                </if>
+                <if test="email!=null">
+                    email = #{email},
+                </if>
+                <if test="department.deptId!=null">
+                    dept_id = #{department.deptId}
+                </if>
+            </set>
+        </trim>
+        where id = #{id}
+    </update>
+    <select id="selectEmpIds" resultMap="employeeInfo">
+        select * from tbl_employee where id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+              #{item}
+        </foreach>
+    </select>
+    <update id="batchUpdate" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            update tbl_employee
+            <trim suffixOverrides=",">
+                <set>
+                    <if test="item.lastName!=null">
+                        last_name = #{item.lastName},
+                    </if>
+                    <if test="item.email!=null">
+                        email = #{item.email},
+                    </if>
+                    <if test="item.department.deptId!=null">
+                        dept_id = #{item.department.deptId}
+                    </if>
+                </set>
+            </trim>
+            where id = #{item.id}
+        </foreach>
+    </update>
+    <insert id="batchSave">
+        insert tbl_employee (last_name,gender,email)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.lastName},#{item.gender},#{item.email})
+        </foreach>
+    </insert>
+
+    <insert id="batchUpdateMap" parameterType="map">
+        <foreach collection="employeeMaps" item="item" index="index" separator=";">
+            update tbl_employee
+            <trim suffixOverrides=",">
+                <set>
+                    <if test="item.lastName!=null">
+                        last_name = #{item.lastName},
+                    </if>
+                    <if test="item.email!=null">
+                        email = #{item.email},
+                    </if>
+                    <if test="item.department.deptId!=null">
+                        dept_id = #{item.department.deptId}
+                    </if>
+                </set>
+            </trim>
+            where id = #{item.id}
+        </foreach>
+    </insert>
+</mapper>

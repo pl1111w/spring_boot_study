@@ -40,10 +40,33 @@ spring:
       enabled: true
       max-file-size: 30MB       #alone
       max-request-size: 30MB    #totol
+  boot:
+    admin:
+      client:
+        url: http://localhost:8080/
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   config-locations: classpath:mybatis/mybatis-config.xml
+management:
+  endpoints:
+    enable-by-default: true
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+info:
+  app:
+    encoding: "@project.build.sourceEncoding@"
+    java:
+      source: "@java.version@"
+      target: "@java.version@"
+
+
+
+
 person:
   name: kris
   age: 13

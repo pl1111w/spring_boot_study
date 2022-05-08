@@ -1,5 +1,7 @@
 package pl1111w.controller;
 
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +24,13 @@ public class ControllerTest {
     @Autowired
     private MyYamlConfig yamlConfig;
 
+    Counter counter;
+
+    public ControllerTest(MeterRegistry meterRegistry){ //该类的构造函数
+        //MeterRegistry指标工厂
+        counter = meterRegistry.counter("my.method.running.counter");//给指标气名称
+    }
+
     @GetMapping("/test")
     public String test() {
         int a = 1 / 0;
@@ -30,6 +39,7 @@ public class ControllerTest {
 
     @GetMapping("/car")
     public String car() {
+        counter.increment();
         return carProperties.getColor();
     }
 

@@ -23,16 +23,17 @@ public class WorkQueueConsumerConfirm02 {
         //推送的消息如何进行消费的接口回调
         DeliverCallback deliverCallback = (consumerTag, delivery) -> {
             String message = new String(delivery.getBody());
-            channel.basicAck(delivery.getEnvelope().getDeliveryTag(),false);
+            channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false);
             System.out.println(message);
         };
         //取消消费的一个回调接口 如在消费的时候队列被删除掉了
         CancelCallback cancelCallback = (consumerTag) -> {
             System.out.println("消息消费被中断");
         };
-
+        //采用手动应答
+        boolean autoAck = false;
         try {
-            channel.basicConsume(WORK_QUEUE, false, deliverCallback, cancelCallback);
+            channel.basicConsume(WORK_QUEUE, autoAck, deliverCallback, cancelCallback);
         } catch (IOException e) {
             e.printStackTrace();
         }

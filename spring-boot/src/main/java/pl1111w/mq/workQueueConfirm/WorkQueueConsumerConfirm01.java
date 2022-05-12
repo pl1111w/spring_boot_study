@@ -37,9 +37,10 @@ public class WorkQueueConsumerConfirm01 {
         CancelCallback cancelCallback = (consumerTag) -> {
             System.out.println("消息消费被中断");
         };
-
+        //采用手动应答
+        boolean autoAck = false;
         try {
-            channel.basicConsume(WORK_QUEUE, false, deliverCallback, cancelCallback);
+            channel.basicConsume(WORK_QUEUE, autoAck, deliverCallback, cancelCallback);
         } catch (IOException e) {
             e.printStackTrace();
         }

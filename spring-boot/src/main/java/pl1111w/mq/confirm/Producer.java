@@ -4,6 +4,9 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.ConfirmCallback;
 import pl1111w.mq.util.RabbitChannel;
 
+import java.util.concurrent.ConcurrentNavigableMap;
+import java.util.concurrent.ConcurrentSkipListMap;
+
 /**
  * @title: pl1111w
  * @description: //逐条确认 批量确认 异步确认
@@ -68,17 +71,30 @@ public class Producer {
         Channel channel = RabbitChannel.getRabbitChannel();
         long startTime = System.currentTimeMillis();
         String UUID = java.util.UUID.randomUUID().toString();
-        ConfirmCallback ackCallback = (long var, boolean var3) -> {
-            System.out.println("ackCallback: " + var);
+        ConcurrentSkipListMap<Long, String> outstandingConfirms = new ConcurrentSkipListMap<>();
+        ConfirmCallback ackCallback = (long sequenceNumber, boolean multiple) -> {
+            if (multiple) {//批量确认
+                //返回的是小于等于当前序列号的未确认消息 是一个 map
+                ConcurrentNavigableMap<Long, String> confirmed =
+                        outstandingConfirms.headMap(sequenceNumber, true);
+                //清除该部分未确认消息
+                confirmed.clear();
+            }else{
+                //只清除当前序列号的消息
+                outstandingConfirms.remove(sequenceNumber);
+            }
+            System.out.println("ackCallback: " + sequenceNumber);
         };
         ConfirmCallback nackCallback = (long var, boolean var3) -> {
-            System.out.println("nackCallback: " + var);
+            String message = outstandingConfirms.get(var);
+            System.out.println("nackCallback: " + message);
         };
         channel.addConfirmListener(ackCallback, nackCallback);
         try {
             channel.confirmSelect();
             channel.queueDeclare(UUID, false, false, false, null);
             for (int i = 0; i < PATCH_COUNT; i++) {
+                outstandingConfirms.put(channel.getNextPublishSeqNo(), String.valueOf(i));
                 channel.basicPublish("", UUID, null, (i + "").getBytes());
             }
         } catch (Exception e) {

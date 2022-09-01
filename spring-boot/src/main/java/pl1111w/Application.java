@@ -26,10 +26,11 @@ import pl1111w.config.MyConditionConfig;
 public class Application {
 
     public static void main(String[] args) {
+        //Spring container
         ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
         String[] names = context.getBeanDefinitionNames();
         for (String name : names) {
-            System.out.println(name);
+            System.out.println("========>"+ name);
         }
         System.out.println("get define configuration");
         User user001 = context.getBean("user001", User.class);

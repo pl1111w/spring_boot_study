@@ -1,4 +1,4 @@
-package pl1111w.interceptor;
+package pl1111w.webservlet.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;

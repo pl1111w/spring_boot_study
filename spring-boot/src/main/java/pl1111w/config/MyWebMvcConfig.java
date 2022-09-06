@@ -5,7 +5,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.util.UrlPathHelper;
-import pl1111w.interceptor.MyInterceptor;
+import pl1111w.webservlet.interceptor.MyInterceptor;
 
 /**
  * @title: pl1111w
